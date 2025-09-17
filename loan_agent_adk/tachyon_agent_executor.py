@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-class WellsFargoAgentExecutor(AgentExecutor):
-    """An AgentExecutor that runs Wells Fargo Bank's ADK-based Agent."""
+class TachyonWellsFargoAgentExecutor(AgentExecutor):
+    """A Tachyon-compatible AgentExecutor for Wells Fargo Bank's ADK-based Agent."""
 
     def __init__(self, runner: Runner):
         self.runner = runner
@@ -51,79 +51,20 @@ class WellsFargoAgentExecutor(AgentExecutor):
         session_id = session_obj.id
         logger.info(f"Session created/retrieved: {session_id}")
 
-        event_count = 0
-        max_events = 5 # Prevent infinite loops
-        final_response_sent = False
-        
+        # Simplified processing for Tachyon compatibility
         try:
-            # Add timeout to prevent endless loops
-            import asyncio
-            timeout_seconds = 30  # 30 second timeout
+            # Process the message directly with the agent
+            response_text = await self._process_message_directly(new_message)
             
-            async def run_with_timeout():
-                async for event in self._run_agent(session_id, new_message):
-                    event_count += 1
-                    logger.info(f"Received event #{event_count}: {type(event)}")
-                    logger.info(f"Event content: {event.content}")
-                    logger.info(f"Event function calls: {event.get_function_calls()}")
-                    logger.info(f"Is final response: {event.is_final_response()}")
-                    
-                    # Prevent infinite loops
-                    if event_count > max_events:
-                        logger.warning(f"Maximum events ({max_events}) reached, breaking loop")
-                        break
-                        
-                    yield event
+            # Convert to A2A format
+            response_parts = convert_genai_parts_to_a2a([
+                types.Part(text=response_text)
+            ])
             
-            # Run with timeout
-            try:
-                async for event in asyncio.wait_for(run_with_timeout(), timeout=timeout_seconds):
-                    if event.is_final_response():
-                        parts = convert_genai_parts_to_a2a(
-                            event.content.parts if event.content and event.content.parts else []
-                        )
-                        logger.info(f"Yielding final response: {parts}")
-                        await task_updater.add_artifact(parts)
-                        await task_updater.complete()
-                        final_response_sent = True
-                        break
-                        
-                    # Handle function calls - these should be processed and not skipped
-                    function_calls = event.get_function_calls()
-                    if function_calls:
-                        logger.info(f"Processing {len(function_calls)} function calls")
-                        # Let the agent process function calls
-                        continue
-                        
-                    # Handle regular content updates
-                    if event.content and event.content.parts:
-                        logger.info("Yielding update response")
-                        task_updater.update_status(
-                            TaskState.working,
-                            message=task_updater.new_agent_message(
-                                convert_genai_parts_to_a2a(event.content.parts)
-                            ),
-                        )
-                        
-            except asyncio.TimeoutError:
-                logger.warning(f"Agent execution timed out after {timeout_seconds} seconds")
-                # Send timeout response
-                timeout_parts = convert_genai_parts_to_a2a([
-                    types.Part(text="Request processing timed out")
-                ])
-                await task_updater.add_artifact(timeout_parts)
-                await task_updater.complete()
-                final_response_sent = True
+            logger.info(f"Yielding response: {response_parts}")
+            await task_updater.add_artifact(response_parts)
+            await task_updater.complete()
             
-            # If no final response was sent, send a default completion
-            if not final_response_sent:
-                logger.warning("No final response received, sending default completion")
-                default_parts = convert_genai_parts_to_a2a([
-                    types.Part(text="Credit request processed successfully")
-                ])
-                await task_updater.add_artifact(default_parts)
-                await task_updater.complete()
-                
         except Exception as e:
             logger.error(f"Error processing request: {e}")
             # Send error response
@@ -132,8 +73,40 @@ class WellsFargoAgentExecutor(AgentExecutor):
             ])
             await task_updater.add_artifact(error_parts)
             await task_updater.complete()
-        
-        logger.info(f"Finished processing request. Total events: {event_count}")
+
+    async def _process_message_directly(self, new_message: types.Content) -> str:
+        """Process message directly without complex event handling."""
+        try:
+            # Extract text from message
+            message_text = ""
+            if new_message and new_message.parts:
+                for part in new_message.parts:
+                    if part.text:
+                        message_text += part.text
+            
+            logger.info(f"Processing message text: {message_text}")
+            
+            # Import the credit processing function
+            from agent import process_credit_request
+            
+            # Call the credit processing function directly
+            result = process_credit_request(message_text)
+            
+            # Parse the result to extract the actual response
+            import json
+            try:
+                result_data = json.loads(result)
+                if "process_credit_request_response" in result_data:
+                    response_data = result_data["process_credit_request_response"]
+                    if "result" in response_data:
+                        return response_data["result"]
+                return result
+            except json.JSONDecodeError:
+                return result
+                
+        except Exception as e:
+            logger.error(f"Error in direct message processing: {e}")
+            return f"Error processing credit request: {str(e)}"
 
     async def execute(
         self,
@@ -141,7 +114,7 @@ class WellsFargoAgentExecutor(AgentExecutor):
         event_queue: EventQueue,
     ):
         print(f"\n{'='*60}")
-        print(f"AGENT EXECUTOR EXECUTE CALLED!")
+        print(f"TACHYON AGENT EXECUTOR EXECUTE CALLED!")
         print(f"Task ID: {context.task_id}")
         print(f"Context ID: {context.context_id}")
         print(f"Message: {context.message}")

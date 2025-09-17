@@ -227,11 +227,13 @@ def create_agent() -> LlmAgent:
             2. Return ONLY the tool's response
             3. Do not add any text, explanation, or modification
             4. If the message is empty, call the tool with an empty string
+            5. Always ensure you complete the task and provide a final response
 
             Example: If you receive "Hello", you call process_credit_request(intent_json="Hello")
             Example: If you receive JSON, you call process_credit_request(intent_json="[the JSON]")
 
             You MUST call the tool for every single message. No exceptions.
+            After calling the tool, you MUST provide the tool's response as your final answer.
         """,
         tools=[process_credit_request],
     )

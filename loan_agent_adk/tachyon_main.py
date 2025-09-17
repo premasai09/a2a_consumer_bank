@@ -6,14 +6,13 @@ import uvicorn
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
-from a2a.server.apps.jsonrpc import JSONRPCApplication
 from a2a.types import (
     AgentCapabilities,
     AgentCard,
     AgentSkill,
 )
 from agent import create_agent
-from agent_executor import WellsFargoAgentExecutor
+from tachyon_agent_executor import TachyonWellsFargoAgentExecutor
 from dotenv import load_dotenv
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
@@ -28,12 +27,11 @@ logger = logging.getLogger(__name__)
 
 class MissingAPIKeyError(Exception):
     """Exception for missing API key."""
-
     pass
 
 
 def main():
-    """Starts the agent server."""
+    """Starts the Tachyon-compatible agent server."""
     host = "localhost"
     port = 10002
     try:
@@ -73,18 +71,8 @@ def main():
             memory_service=InMemoryMemoryService(),
         )
         print(f"DEBUG: Created runner: {runner}")
-        agent_executor = WellsFargoAgentExecutor(runner)
-        print(f"DEBUG: Created agent executor: {agent_executor}")
-        print(f"DEBUG: Agent executor type: {type(agent_executor)}")
-        
-        # Debug the agent executor
-        try:
-            if hasattr(agent_executor, 'runner'):
-                print(f"DEBUG: Agent executor runner: {agent_executor.runner}")
-            if hasattr(agent_executor, '_running_sessions'):
-                print(f"DEBUG: Agent executor running sessions: {agent_executor._running_sessions}")
-        except Exception as e:
-            print(f"DEBUG: Error inspecting agent executor: {e}")
+        agent_executor = TachyonWellsFargoAgentExecutor(runner)
+        print(f"DEBUG: Created Tachyon agent executor: {agent_executor}")
 
         # Create task store
         task_store = InMemoryTaskStore()
@@ -96,16 +84,6 @@ def main():
             task_store=task_store,
         )
         print(f"DEBUG: Created request handler: {request_handler}")
-        print(f"DEBUG: Request handler type: {type(request_handler)}")
-        
-        # Debug the request handler
-        try:
-            if hasattr(request_handler, 'agent_executor'):
-                print(f"DEBUG: Request handler agent_executor: {request_handler.agent_executor}")
-            if hasattr(request_handler, 'task_store'):
-                print(f"DEBUG: Request handler task_store: {request_handler.task_store}")
-        except Exception as e:
-            print(f"DEBUG: Error inspecting request handler: {e}")
         
         # Create A2A server with proper JSON-RPC configuration
         server = A2AStarletteApplication(
@@ -114,21 +92,13 @@ def main():
         )
         print(f"DEBUG: Created A2A server with DefaultRequestHandler")
         
-        print(f"DEBUG: Server: {server}")
-        print(f"DEBUG: Server type: {type(server)}")
-        
         # Build the application with proper configuration
         app = server.build(agent_card_url='/.well-known/agent-card.json')
         print("DEBUG: Built app with agent-card.json")
-        print(f"DEBUG: Built app: {app}")
-        print(f"DEBUG: App type: {type(app)}")
         
         # Add custom JSON-RPC handler for send_message method
-        from starlette.applications import Starlette
-        from starlette.routing import Route
         from starlette.responses import JSONResponse
         import json
-        import asyncio
         
         async def handle_jsonrpc(request):
             """Custom JSON-RPC handler for send_message method"""
@@ -136,7 +106,7 @@ def main():
                 body = await request.body()
                 data = json.loads(body)
                 
-                print(f"🎯 CUSTOM JSON-RPC HANDLER: {data}")
+                print(f"🎯 TACHYON JSON-RPC HANDLER: {data}")
                 
                 if data.get('method') == 'send_message':
                     # Extract message from params
@@ -145,12 +115,13 @@ def main():
                     
                     print(f"📨 Processing send_message: {message}")
                     
-                    # Use the actual A2A request handler instead of mock response
+                    # Use the actual A2A request handler
                     try:
                         # Create a mock request context for the A2A handler
                         from a2a.server.agent_execution.context import RequestContext
                         from a2a.server.events.event_queue import EventQueue
                         from a2a.types import Part, TextPart
+                        from google.genai import types
                         
                         # Extract task and context IDs
                         task_id = message.get('taskId', str(uuid.uuid4()))
@@ -173,8 +144,12 @@ def main():
                         # Create event queue
                         event_queue = EventQueue()
                         
-                        # Execute the agent
-                        await agent_executor.execute(request_context, event_queue)
+                        # Execute the agent with timeout
+                        import asyncio
+                        await asyncio.wait_for(
+                            agent_executor.execute(request_context, event_queue),
+                            timeout=30.0  # 30 second timeout
+                        )
                         
                         # Return success response
                         response_data = {
@@ -189,9 +164,20 @@ def main():
                         
                         return JSONResponse(response_data)
                         
+                    except asyncio.TimeoutError:
+                        print(f"❌ Agent execution timed out")
+                        error_response = {
+                            "jsonrpc": "2.0",
+                            "id": data.get('id'),
+                            "error": {
+                                "code": -32603,
+                                "message": "Agent execution timed out"
+                            }
+                        }
+                        return JSONResponse(error_response)
+                        
                     except Exception as exec_error:
                         print(f"❌ Agent execution error: {exec_error}")
-                        # Return error response
                         error_response = {
                             "jsonrpc": "2.0",
                             "id": data.get('id'),
@@ -228,35 +214,13 @@ def main():
         
         # Add the custom JSON-RPC route
         app.add_route("/", handle_jsonrpc, methods=["POST"])
-        print("DEBUG: Added custom JSON-RPC handler for send_message")
-        
-        # Debug the built app to see what routes are available
-        print("DEBUG: Available app routes:")
-        try:
-            if hasattr(app, 'routes'):
-                print(f"  App routes: {app.routes}")
-            if hasattr(app, 'router'):
-                print(f"  App router: {app.router}")
-                if hasattr(app.router, 'routes'):
-                    print(f"  App router routes: {app.router.routes}")
-        except Exception as e:
-            print(f"DEBUG: Error inspecting app: {e}")
-        
-        # Check if the A2A server has the send_message method registered
-        print("DEBUG: Checking A2A server method registration...")
-        try:
-            if hasattr(app, 'router') and hasattr(app.router, 'routes'):
-                for route in app.router.routes:
-                    if hasattr(route, 'path') and hasattr(route, 'methods'):
-                        print(f"  Route: {route.path} - Methods: {route.methods}")
-        except Exception as e:
-            print(f"DEBUG: Error checking routes: {e}")
+        print("DEBUG: Added Tachyon-compatible JSON-RPC handler for send_message")
         
         # Add request logging middleware
         @app.middleware("http")
         async def log_requests(request, call_next):
             print(f"\n{'='*80}")
-            print(f"INCOMING REQUEST: {request.method} {request.url}")
+            print(f"TACHYON INCOMING REQUEST: {request.method} {request.url}")
             print(f"Headers: {dict(request.headers)}")
             
             # Read request body
@@ -270,14 +234,12 @@ def main():
                     
                     # Try to parse as JSON
                     try:
-                        import json
                         body_json = json.loads(body_text)
                         print(f"Body JSON: {json.dumps(body_json, indent=2)}")
                         
                         # Check if this is a send_message request
                         if 'method' in body_json and body_json['method'] == 'send_message':
-                            print("🎯 SEND_MESSAGE REQUEST DETECTED!")
-                            print("   This should be handled by the A2A server")
+                            print("🎯 TACHYON SEND_MESSAGE REQUEST DETECTED!")
                             
                     except json.JSONDecodeError:
                         print("Body is not valid JSON")
@@ -291,20 +253,20 @@ def main():
             # Process the request
             response = await call_next(request)
             
-            print(f"RESPONSE: {response.status_code}")
+            print(f"TACHYON RESPONSE: {response.status_code}")
             print(f"Response headers: {dict(response.headers)}")
             
             return response
         
-        print(f"DEBUG: Starting server on {host}:{port}")
-        print("🚀 Starting Wells Fargo Bank Agent (A2A Server)")
+        print(f"DEBUG: Starting Tachyon-compatible server on {host}:{port}")
+        print("🚀 Starting Wells Fargo Bank Agent (Tachyon A2A Server)")
         print("=" * 60)
         print(f"✅ Agent Card: {agent_card.name}")
         print(f"   URL: {agent_card.url}")
         print(f"   Skills: {[skill.name for skill in agent_card.skills]}")
         print(f"🌐 Server URL: http://{host}:{port}")
         print(f"🔗 Agent Card URL: http://{host}:{port}/.well-known/agent-card.json")
-        print("📡 Ready for agent-to-agent communication!")
+        print("📡 Ready for Tachyon agent-to-agent communication!")
         print("=" * 60)
         
         uvicorn.run(app, host=host, port=port, log_level="info")
