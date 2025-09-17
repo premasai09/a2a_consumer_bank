@@ -62,18 +62,38 @@ class ConsumerAgent:
     async def _async_init_components(self, remote_agent_addresses: List[str]):
         async with httpx.AsyncClient(timeout=30) as client:
             for address in remote_agent_addresses:
-                card_resolver = A2ACardResolver(client, address)
                 try:
-                    card = await card_resolver.get_agent_card()
+                    # Try the new agent-card.json endpoint first
+                    agent_card_url = f"{address}/.well-known/agent-card.json"
+                    print(f"Attempting to fetch agent card from: {agent_card_url}")
+                    response = await client.get(agent_card_url)
+                    response.raise_for_status()
+                    card_data = response.json()
+                    card = AgentCard.model_validate(card_data)
+                    
                     remote_connection = RemoteAgentConnections(
                         agent_card=card, agent_url=address
                     )
                     self.remote_agent_connections[card.name] = remote_connection
                     self.cards[card.name] = card
+                    print(f"Successfully connected to {card.name} at {address}")
                 except httpx.ConnectError as e:
                     print(f"ERROR: Failed to get agent card from {address}: {e}")
                 except Exception as e:
                     print(f"ERROR: Failed to initialize connection for {address}: {e}")
+                    # Fallback to original A2ACardResolver for backward compatibility
+                    try:
+                        print(f"Falling back to default agent.json endpoint for {address}")
+                        card_resolver = A2ACardResolver(client, address)
+                        card = await card_resolver.get_agent_card()
+                        remote_connection = RemoteAgentConnections(
+                            agent_card=card, agent_url=address
+                        )
+                        self.remote_agent_connections[card.name] = remote_connection
+                        self.cards[card.name] = card
+                        print(f"Successfully connected to {card.name} at {address} using fallback")
+                    except Exception as fallback_error:
+                        print(f"ERROR: Fallback also failed for {address}: {fallback_error}")
 
         agent_info = [
             json.dumps({"name": card.name, "description": card.description})
@@ -241,9 +261,7 @@ class ConsumerAgent:
                     "message": {
                         "role": "user",
                         "parts": [{"type": "text", "text": intent.to_json()}],
-                        "messageId": message_id,
-                        "taskId": task_id,
-                        "contextId": context_id,
+                        "messageId": message_id
                     },
                 }
 

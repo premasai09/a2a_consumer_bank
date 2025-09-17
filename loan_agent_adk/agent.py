@@ -28,6 +28,7 @@ def process_credit_request(intent_json: str) -> str:
         JSON string containing the credit offer.
     """
     print(f"DEBUG: process_credit_request called with: {intent_json[:200]}...")
+    print(f"DEBUG: Full intent_json: {intent_json}")
     try:
         # Parse the intent
         intent_data = json.loads(intent_json)

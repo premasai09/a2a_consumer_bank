@@ -44,20 +44,31 @@ class WellsFargoAgentExecutor(AgentExecutor):
         session_id: str,
         task_updater: TaskUpdater,
     ) -> None:
+        logger.info(f"Processing request for session {session_id}")
+        logger.info(f"Message content: {new_message}")
+        
         session_obj = await self._upsert_session(session_id)
         session_id = session_obj.id
+        logger.info(f"Session created/retrieved: {session_id}")
 
+        event_count = 0
         async for event in self._run_agent(session_id, new_message):
+            event_count += 1
+            logger.info(f"Received event #{event_count}: {type(event)}")
+            logger.info(f"Event content: {event.content}")
+            logger.info(f"Event function calls: {event.get_function_calls()}")
+            logger.info(f"Is final response: {event.is_final_response()}")
+            
             if event.is_final_response():
                 parts = convert_genai_parts_to_a2a(
                     event.content.parts if event.content and event.content.parts else []
                 )
-                logger.debug("Yielding final response: %s", parts)
-                task_updater.add_artifact(parts)
-                task_updater.complete()
+                logger.info(f"Yielding final response: {parts}")
+                await task_updater.add_artifact(parts)
+                await task_updater.complete()
                 break
             if not event.get_function_calls():
-                logger.debug("Yielding update response")
+                logger.info("Yielding update response")
                 task_updater.update_status(
                     TaskState.working,
                     message=task_updater.new_agent_message(
@@ -69,13 +80,25 @@ class WellsFargoAgentExecutor(AgentExecutor):
                     ),
                 )
             else:
-                logger.debug("Skipping event")
+                logger.info("Skipping event with function calls")
+        
+        logger.info(f"Finished processing request. Total events: {event_count}")
 
     async def execute(
         self,
         context: RequestContext,
         event_queue: EventQueue,
     ):
+        print(f"\n{'='*60}")
+        print(f"AGENT EXECUTOR EXECUTE CALLED!")
+        print(f"Task ID: {context.task_id}")
+        print(f"Context ID: {context.context_id}")
+        print(f"Message: {context.message}")
+        print(f"{'='*60}\n")
+        
+        logger.info(f"Execute called with context: task_id={context.task_id}, context_id={context.context_id}")
+        logger.info(f"Message: {context.message}")
+        
         if not context.task_id or not context.context_id:
             raise ValueError("RequestContext must have task_id and context_id")
         if not context.message:
@@ -83,12 +106,19 @@ class WellsFargoAgentExecutor(AgentExecutor):
 
         updater = TaskUpdater(event_queue, context.task_id, context.context_id)
         if not context.current_task:
-            updater.submit()
-        updater.start_work()
+            logger.info("Submitting new task")
+            await updater.submit()
+        logger.info("Starting work")
+        await updater.start_work()
+        
+        converted_parts = convert_a2a_parts_to_genai(context.message.parts)
+        logger.info(f"Converted parts: {converted_parts}")
+        
+        user_content = types.UserContent(parts=converted_parts)
+        logger.info(f"User content: {user_content}")
+        
         await self._process_request(
-            types.UserContent(
-                parts=convert_a2a_parts_to_genai(context.message.parts),
-            ),
+            user_content,
             context.context_id,
             updater,
         )
