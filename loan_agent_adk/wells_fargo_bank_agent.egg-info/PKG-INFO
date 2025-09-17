@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: wells-fargo-bank-agent
+Version: 0.1.0
+Summary: Wells Fargo Bank agent for credit processing in the A2A project.
+Requires-Python: >=3.10
+Requires-Dist: a2a-sdk>=0.2.5
+Requires-Dist: click>=8.2.1
+Requires-Dist: google-adk>=1.2.1
+Requires-Dist: google-generativeai>=0.8.5
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: nest-asyncio>=1.6.0
+Requires-Dist: python-dotenv
+Requires-Dist: uvicorn

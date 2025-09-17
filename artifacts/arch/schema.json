@@ -1,0 +1,279 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Intent": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "Unique identifier for the credit request"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the request was created"
+        },
+        "consumer": {
+          "type": "object",
+          "properties": {
+            "companyId": {
+              "type": "string",
+              "description": "Unique identifier for the requesting company"
+            },
+            "companyName": {
+              "type": "string",
+              "description": "Name of the requesting company"
+            },
+            "creditScore": {
+              "type": "number",
+              "minimum": 300,
+              "maximum": 850,
+              "description": "Credit score of the company"
+            },
+            "annualRevenue": {
+              "type": "number",
+              "description": "Annual revenue in USD"
+            },
+            "yearsInBusiness": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of years in business"
+            },
+            "industry": {
+              "type": "string",
+              "description": "Industry classification"
+            }
+          },
+          "required": ["companyId", "companyName", "creditScore", "annualRevenue", "yearsInBusiness", "industry"]
+        },
+        "creditRequest": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "minimum": 1000,
+              "description": "Requested credit amount in USD"
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Duration in months"
+            },
+            "purpose": {
+              "type": "string",
+              "description": "Purpose of the credit line"
+            },
+            "preferredInterestRate": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Preferred maximum interest rate (annual percentage)"
+            }
+          },
+          "required": ["amount", "duration", "purpose"]
+        },
+        "esgRequirements": {
+          "type": "object",
+          "properties": {
+            "esgWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Weight given to ESG factors in decision making"
+            },
+            "carbonFootprintThreshold": {
+              "type": "number",
+              "description": "Maximum acceptable carbon footprint"
+            },
+            "socialImpactFocus": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Areas of social impact focus"
+            }
+          }
+        },
+        "digitalSignature": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "description": "Digital signature algorithm used"
+            },
+            "signature": {
+              "type": "string",
+              "description": "Digital signature of the request"
+            },
+            "publicKey": {
+              "type": "string",
+              "description": "Public key for verification"
+            }
+          },
+          "required": ["algorithm", "signature", "publicKey"]
+        }
+      },
+      "required": ["requestId", "timestamp", "consumer", "creditRequest", "digitalSignature"]
+    },
+    "Offer": {
+      "type": "object",
+      "properties": {
+        "offerId": {
+          "type": "string",
+          "description": "Unique identifier for the offer"
+        },
+        "requestId": {
+          "type": "string",
+          "description": "Reference to the original request"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the offer was created"
+        },
+        "bank": {
+          "type": "object",
+          "properties": {
+            "bankId": {
+              "type": "string",
+              "description": "Unique identifier for the bank"
+            },
+            "bankName": {
+              "type": "string",
+              "description": "Name of the bank"
+            },
+            "bankToken": {
+              "type": "string",
+              "description": "Authentication token for the bank"
+            },
+            "regulatoryLicense": {
+              "type": "string",
+              "description": "Regulatory license number"
+            }
+          },
+          "required": ["bankId", "bankName", "bankToken", "regulatoryLicense"]
+        },
+        "offerTerms": {
+          "type": "object",
+          "properties": {
+            "approvedAmount": {
+              "type": "number",
+              "description": "Amount approved for credit line"
+            },
+            "interestRate": {
+              "type": "number",
+              "description": "Annual interest rate (percentage)"
+            },
+            "repaymentPeriod": {
+              "type": "integer",
+              "description": "Repayment period in months"
+            },
+            "originationFee": {
+              "type": "number",
+              "description": "Origination fee in USD"
+            },
+            "annualFee": {
+              "type": "number",
+              "description": "Annual maintenance fee in USD"
+            },
+            "drawingPeriod": {
+              "type": "integer",
+              "description": "Period during which funds can be drawn (months)"
+            }
+          },
+          "required": ["approvedAmount", "interestRate", "repaymentPeriod"]
+        },
+        "esgImpact": {
+          "type": "object",
+          "properties": {
+            "carbonFootprint": {
+              "type": "number",
+              "description": "Estimated carbon footprint of the loan"
+            },
+            "carbonAdjustedRate": {
+              "type": "number",
+              "description": "Interest rate adjusted for carbon impact"
+            },
+            "esgScore": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "ESG score of the offer"
+            },
+            "esgSummary": {
+              "type": "string",
+              "description": "Human-readable ESG impact summary"
+            },
+            "sustainabilityInitiatives": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of sustainability initiatives supported"
+            }
+          },
+          "required": ["carbonFootprint", "carbonAdjustedRate", "esgScore", "esgSummary"]
+        },
+        "regulatoryCompliance": {
+          "type": "object",
+          "properties": {
+            "complianceChecks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "checkType": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["passed", "failed", "warning"]
+                  },
+                  "details": {
+                    "type": "string"
+                  }
+                },
+                "required": ["checkType", "status"]
+              }
+            },
+            "riskAssessment": {
+              "type": "object",
+              "properties": {
+                "riskLevel": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high"]
+                },
+                "riskFactors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": ["riskLevel"]
+            }
+          },
+          "required": ["complianceChecks", "riskAssessment"]
+        },
+        "digitalSignature": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "description": "Digital signature algorithm used"
+            },
+            "signature": {
+              "type": "string",
+              "description": "Digital signature of the offer"
+            },
+            "publicKey": {
+              "type": "string",
+              "description": "Public key for verification"
+            }
+          },
+          "required": ["algorithm", "signature", "publicKey"]
+        }
+      },
+      "required": ["offerId", "requestId", "timestamp", "bank", "offerTerms", "esgImpact", "regulatoryCompliance", "digitalSignature"]
+    }
+  }
+}
