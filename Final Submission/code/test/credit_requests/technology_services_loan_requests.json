@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "ATI-001-TECH",
+      "company_name": "Acme Technologies Inc.",
+      "sender_email": "finance@acmetech.com",
+      "requested_amount_usd": 2500000,
+      "preferred_interest_rate_percent": 6.8,
+      "repayment_duration_months": 36,
+      "repayment_preference": "monthly",
+      "purpose": "Technology Infrastructure and Software Development - Upgrade cloud computing infrastructure, acquire enterprise software licenses, implement advanced cybersecurity systems, and fund development of next-generation AI-powered business solutions for enterprise clients.",
+      "collateral_description": "Technology equipment and software licenses ($8M value), intellectual property portfolio including patents and trademarks ($12M), accounts receivable from enterprise clients ($15M), and general business assets lien.",
+      "esg_consent": "Yes - Committed to sustainable technology practices and energy-efficient computing infrastructure. Current certifications: ISO14001, CDP Climate Change A-, LEED Gold. Carbon emissions: 1,200 tons CO2e annually. Will prioritize renewable energy-powered data centers and carbon-neutral cloud services.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "ATI-002-EXP",
+      "company_name": "Acme Technologies Inc.",
+      "sender_email": "finance@acmetech.com",
+      "requested_amount_usd": 1800000,
+      "preferred_interest_rate_percent": 7.2,
+      "repayment_duration_months": 24,
+      "repayment_preference": "monthly",
+      "purpose": "Market Expansion and Talent Acquisition - Fund expansion into new geographic markets, hire specialized software engineers and data scientists, establish regional sales offices, and invest in customer success and support infrastructure to serve growing enterprise client base.",
+      "collateral_description": "Customer contracts and recurring revenue streams ($25M NPV), intellectual property and trade secrets ($12M), office equipment and furniture ($2M), and corporate guarantees from parent entity.",
+      "esg_consent": "Yes - Expansion will maintain ESG standards across all new markets. Commitment to responsible AI development, data privacy compliance, and sustainable business practices. Will implement remote work policies to reduce carbon footprint.",
+      "drawdown_type": "revolving"
+    },
+    
+    {
+      "application_id": "ATI-003-RD",
+      "company_name": "Acme Technologies Inc.",
+      "sender_email": "finance@acmetech.com",
+      "requested_amount_usd": 3200000,
+      "preferred_interest_rate_percent": 6.5,
+      "repayment_duration_months": 48,
+      "repayment_preference": "quarterly",
+      "purpose": "Research and Development Innovation - Fund breakthrough research in artificial intelligence, machine learning algorithms, quantum computing applications, and next-generation cybersecurity solutions. Includes hiring top-tier research scientists and acquiring specialized R&D equipment.",
+      "collateral_description": "Research equipment and laboratory facilities ($5M), intellectual property and patent portfolio ($12M), government research grants and contracts ($8M), and technology development partnerships with universities.",
+      "esg_consent": "Yes - R&D investments will focus on sustainable technology solutions that address climate change and environmental challenges. Commitment to open-source contributions and ethical AI development practices.",
+      "drawdown_type": "lumpsum"
+    }
+  ]

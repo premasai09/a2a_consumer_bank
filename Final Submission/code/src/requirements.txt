@@ -1,0 +1,49 @@
+# Core A2A and ADK dependencies
+tachyon_adk_client
+a2a-sdk
+google-adk
+google-generativeai
+
+# Web frameworks and servers
+Flask
+Flask-CORS
+Werkzeug
+uvicorn
+starlette
+
+# HTTP and networking
+httpx
+requests
+
+# Async utilities
+nest-asyncio
+
+# CLI and environment
+click
+python-dotenv
+
+# Data serialization and validation
+dataclasses-json
+pydantic
+jsonschema
+
+# Security and cryptography
+cryptography
+PyJWT
+
+# Date and time utilities
+python-dateutil
+
+# Type hints and extensions
+typing-extensions
+
+# Development and testing
+pytest
+pytest-asyncio
+
+# Code formatting
+black
+
+# Build tools
+setuptools
+wheel

@@ -1,0 +1,23 @@
+{
+    "intent_id": "string",
+    "created_at": "string",
+    "nonce": "string",
+    "protocol_version": "string",
+    "sender_id": "string",
+    "sender_name": "string",
+    "carbon_emissions_tons_co2e": "number",
+    "company_registration_number": "string",
+    "jurisdiction": "string",
+    "industry_code": "string",
+    "tax_id": "string",
+    "ESG_impact_ratio": "string",
+    "financials_annual_revenue": "number",
+    "financials_net_income": "number",
+    "financials_assets_total": "number",
+    "financials_liabilities_total": "number",
+    "credit_report_ref": "string",
+    "esg_certifications": "string",
+    "esg_reporting_url": "string",
+    "regulatory_context_jurisdiction": "string",
+    "regulatory_context_required_disclosures": "string"
+  }

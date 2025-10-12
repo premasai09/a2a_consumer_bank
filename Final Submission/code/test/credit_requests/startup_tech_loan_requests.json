@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "CSA-001-WC",
+      "company_name": "CloudScale AI Inc.",
+      "sender_email": "finance@cloudscaleai.com",
+      "requested_amount_usd": 1500000,
+      "preferred_interest_rate_percent": 8.5,
+      "repayment_duration_months": 12,
+      "repayment_preference": "monthly",
+      "purpose": "Working Capital and Cash Flow Management - Support rapid scaling operations, manage cash flow gaps between customer payments, fund sales and marketing initiatives for customer acquisition, and cover operational expenses during high-growth phase.",
+      "collateral_description": "Accounts receivable ($8M), intellectual property portfolio (AI/ML patents and trademarks valued at $12M), personal guarantees from founders (limited to $1M each), and general business assets lien.",
+      "esg_consent": "Yes - Company commits to ESG reporting and compliance with environmental and social governance standards. Current certifications: B-CORP, CARBON NEUTRAL, ISO14001. Carbon emissions: 450 tons CO2e annually.",
+      "drawdown_type": "revolving"
+    },
+    
+    {
+      "application_id": "CSA-002-EQ",
+      "company_name": "CloudScale AI Inc.",
+      "sender_email": "finance@cloudscaleai.com",
+      "requested_amount_usd": 2500000,
+      "preferred_interest_rate_percent": 7.2,
+      "repayment_duration_months": 36,
+      "repayment_preference": "monthly",
+      "purpose": "Technology Infrastructure and Equipment Acquisition - Purchase high-performance computing infrastructure, AI/ML development servers, cloud infrastructure credits, software licenses, and development tools to support product development and customer delivery capabilities.",
+      "collateral_description": "Equipment being financed (servers, hardware valued at $2.8M), existing technology assets ($3.5M), subordinated note from Series B investors ($1M), and equipment warranties/insurance policies.",
+      "esg_consent": "Yes - Committed to sustainable technology practices and energy-efficient computing infrastructure. Will prioritize renewable energy-powered data centers and carbon-neutral cloud services.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "CSA-003-GC",
+      "company_name": "CloudScale AI Inc.",
+      "sender_email": "finance@cloudscaleai.com",
+      "requested_amount_usd": 3000000,
+      "preferred_interest_rate_percent": 9.8,
+      "repayment_duration_months": 48,
+      "repayment_preference": "quarterly",
+      "purpose": "Market Expansion and Strategic Acquisitions - Fund expansion into European markets, establish international offices, acquire complementary AI startups to enhance product portfolio, and build strategic partnerships. Includes hiring key personnel and establishing compliance frameworks for international operations.",
+      "collateral_description": "Company equity pledge (15% of shares), international subsidiary assets, customer contracts portfolio ($20M+ value), corporate guarantees from parent entity, and cross-default provisions.",
+      "esg_consent": "Yes - International expansion will maintain ESG standards across all jurisdictions. Commitment to responsible AI development, data privacy compliance, and sustainable business practices in all new markets.",
+      "drawdown_type": "lumpsum"
+    }
+  ]

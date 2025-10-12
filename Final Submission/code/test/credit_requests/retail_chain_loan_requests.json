@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "PCH-001-SEAS",
+      "company_name": "Pacific Coast Home & Garden LLC",
+      "sender_email": "finance@pchomeandgarden.com",
+      "requested_amount_usd": 2500000,
+      "preferred_interest_rate_percent": 7.5,
+      "repayment_duration_months": 12,
+      "repayment_preference": "monthly",
+      "purpose": "Seasonal Inventory Financing and Working Capital - Finance spring and summer inventory buildup for peak gardening season, including plants, garden tools, outdoor furniture, landscaping materials, and seasonal decorative items. Support cash flow during high-inventory/low-sales winter months and enable early-season supplier payments for better pricing.",
+      "collateral_description": "Seasonal inventory ($25M peak value), accounts receivable ($8M), store fixtures and equipment ($12M), real estate liens on 3 owned locations ($15M total), and inventory insurance policies.",
+      "esg_consent": "Yes - Committed to sustainable retail practices and environmentally friendly product sourcing. Current certifications: LEED, ENERGY STAR, FAIR TRADE. Carbon emissions: 8,500 tons CO2e annually. Will prioritize organic and sustainably sourced products.",
+      "drawdown_type": "revolving"
+    },
+    
+    {
+      "application_id": "PCH-002-EXP",
+      "company_name": "Pacific Coast Home & Garden LLC",
+      "sender_email": "finance@pchomeandgarden.com",
+      "requested_amount_usd": 4000000,
+      "preferred_interest_rate_percent": 6.8,
+      "repayment_duration_months": 60,
+      "repayment_preference": "monthly",
+      "purpose": "New Store Locations and Market Expansion - Develop 3 new store locations in high-growth California markets (Sacramento, Fresno, and Bakersfield), including land acquisition, construction, fixtures, and initial inventory. Each location will be 45,000-55,000 sq ft with garden centers and will serve underserved markets with limited home and garden competition.",
+      "collateral_description": "New real estate being developed ($10M estimated value), existing owned properties ($15M), new store fixtures and equipment ($3M), personal guarantees from LLC members ($2M combined), and first mortgage on new properties.",
+      "esg_consent": "Yes - New stores will be built to sustainable standards with energy-efficient systems, LED lighting, and water conservation features. Will include electric vehicle charging stations and promote sustainable gardening practices.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "PCH-003-TECH",
+      "company_name": "Pacific Coast Home & Garden LLC",
+      "sender_email": "finance@pchomeandgarden.com",
+      "requested_amount_usd": 1500000,
+      "preferred_interest_rate_percent": 6.5,
+      "repayment_duration_months": 36,
+      "repayment_preference": "monthly",
+      "purpose": "Technology Modernization and Operational Equipment - Upgrade point-of-sale systems across all locations, implement integrated inventory management system, install automated irrigation systems for plant care, purchase delivery trucks and forklifts, and deploy customer-facing technology including self-service kiosks and mobile payment systems.",
+      "collateral_description": "Equipment being financed ($3.5M), existing delivery vehicles ($1.8M), technology assets and software licenses ($1.2M), UCC lien on business equipment, and technology warranties/service agreements.",
+      "esg_consent": "Yes - Technology upgrades will improve operational efficiency and reduce paper usage through digital systems. New delivery vehicles will prioritize hybrid or electric options where feasible to reduce transportation emissions.",
+      "drawdown_type": "lumpsum"
+    }
+  ]
