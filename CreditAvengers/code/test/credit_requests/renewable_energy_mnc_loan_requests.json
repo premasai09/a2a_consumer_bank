@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "GPG-001-PROJ",
+      "company_name": "GreenPower Global Corporation",
+      "sender_email": "projectfinance@greenpowerglobal.com",
+      "requested_amount_usd": 4500000,
+      "preferred_interest_rate_percent": 4.8,
+      "repayment_duration_months": 60,
+      "repayment_preference": "quarterly",
+      "purpose": "Utility-Scale Solar and Wind Farm Development - Finance construction of 500MW solar farm in Nevada and 300MW wind farm in Texas, including turbines, solar panels, transmission infrastructure, energy storage systems, and grid interconnection facilities. Projects have 25-year power purchase agreements with investment-grade utilities.",
+      "collateral_description": "Project assets and equipment ($145M value), power purchase agreements ($2.1B NPV), land leases and rights ($15M), completion guarantees, step-in rights for lenders, and assignment of all project revenues and insurance proceeds.",
+      "esg_consent": "Yes - Core business model focused on renewable energy generation and carbon emissions reduction. Current certifications: CDP, SBTI, UN GLOBAL COMPACT, GRI, TCFD, B-CORP, CARBON NEUTRAL. Carbon emissions: 2,800 tons CO2e annually. Projects will generate clean energy equivalent to removing 150,000 cars from roads annually.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "GPG-002-EQUIP",
+      "company_name": "GreenPower Global Corporation",
+      "sender_email": "projectfinance@greenpowerglobal.com",
+      "requested_amount_usd": 3500000,
+      "preferred_interest_rate_percent": 5.5,
+      "repayment_duration_months": 48,
+      "repayment_preference": "monthly",
+      "purpose": "Next-Generation Renewable Energy Technology - Acquire cutting-edge renewable energy equipment including advanced wind turbines with higher efficiency ratings, next-generation solar panels with improved conversion rates, grid-scale battery storage systems, smart grid technology, and AI-powered energy management systems for optimization across existing facilities.",
+      "collateral_description": "Equipment being financed ($52M value), existing renewable energy assets ($1.2B), technology patents and intellectual property ($85M), equipment warranties/insurance, and UCC lien on all financed equipment.",
+      "esg_consent": "Yes - Equipment upgrades directly support climate goals through improved renewable energy efficiency and reduced lifecycle environmental impact. Technology investments align with Science Based Targets initiative and carbon neutrality commitments.",
+      "drawdown_type": "lumpsum"
+    },
+    
+    {
+      "application_id": "GPG-003-REFI",
+      "company_name": "GreenPower Global Corporation",
+      "sender_email": "projectfinance@greenpowerglobal.com",
+      "requested_amount_usd": 5000000,
+      "preferred_interest_rate_percent": 4.2,
+      "repayment_duration_months": 60,
+      "repayment_preference": "yearly",
+      "purpose": "Debt Refinancing and Strategic Growth Initiatives - Refinance existing higher-rate debt facilities to reduce interest expense, fund strategic acquisitions of smaller renewable energy companies, establish international development projects in emerging markets, and provide general corporate purposes including R&D for breakthrough renewable technologies.",
+      "collateral_description": "Corporate assets portfolio ($2.4B), international subsidiary guarantees, cash flow from operations ($180M annually), cross-default provisions with existing facilities, and pledge of equity interests in major subsidiaries.",
+      "esg_consent": "Yes - Refinancing will free up capital for additional renewable energy projects and ESG initiatives. Acquisitions will focus on companies with strong sustainability profiles. International expansion will accelerate global clean energy transition and support UN Sustainable Development Goals.",
+      "drawdown_type": "revolving"
+    }
+  ]

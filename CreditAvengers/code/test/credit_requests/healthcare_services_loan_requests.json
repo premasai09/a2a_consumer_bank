@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "SMG-001-MED",
+      "company_name": "Sunshine Medical Group P.A.",
+      "sender_email": "cfo@sunshinemedical.com",
+      "requested_amount_usd": 3500000,
+      "preferred_interest_rate_percent": 5.8,
+      "repayment_duration_months": 60,
+      "repayment_preference": "monthly",
+      "purpose": "Advanced Medical Equipment and Technology Acquisition - Purchase state-of-the-art medical equipment including MRI machines, CT scanners, digital X-ray systems, ultrasound equipment, electronic health record system upgrades, and telemedicine infrastructure. Equipment will be deployed across 8 clinic locations to enhance diagnostic capabilities and patient care quality.",
+      "collateral_description": "Medical equipment being financed ($14M value), existing medical equipment ($18M), accounts receivable from insurance providers ($22M), real estate liens on 5 owned clinic properties ($28M), and equipment warranties/service contracts.",
+      "esg_consent": "Yes - Committed to sustainable healthcare practices and energy-efficient medical technology. Current certifications: ISO26000, ENERGY STAR, LEED. Carbon emissions: 12,500 tons CO2e annually. New equipment will prioritize energy efficiency and reduced environmental impact.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "SMG-002-FAC",
+      "company_name": "Sunshine Medical Group P.A.",
+      "sender_email": "cfo@sunshinemedical.com",
+      "requested_amount_usd": 4500000,
+      "preferred_interest_rate_percent": 6.2,
+      "repayment_duration_months": 84,
+      "repayment_preference": "monthly",
+      "purpose": "Medical Facility Expansion and Specialty Centers - Construct new 60,000 sq ft multi-specialty medical center in Tampa, expand existing Miami facility by 25,000 sq ft, and develop specialized outpatient surgery center in Orlando. Projects include specialized medical infrastructure, parking facilities, and compliance with healthcare building codes and ADA requirements.",
+      "collateral_description": "New real estate and facilities ($21M projected value), existing clinic properties ($28M), construction completion guarantees, medical practice revenue assignments, and first mortgage on new properties.",
+      "esg_consent": "Yes - New facilities will be designed to healthcare sustainability standards with energy-efficient HVAC systems, LED lighting, water conservation, and healing garden spaces. Construction will follow green building practices and LEED certification where possible.",
+      "drawdown_type": "lumpsum"
+    },
+    
+    {
+      "application_id": "SMG-003-WC",
+      "company_name": "Sunshine Medical Group P.A.",
+      "sender_email": "cfo@sunshinemedical.com",
+      "requested_amount_usd": 2000000,
+      "preferred_interest_rate_percent": 5.2,
+      "repayment_duration_months": 18,
+      "repayment_preference": "monthly",
+      "purpose": "Working Capital and Insurance Receivables Management - Manage cash flow gaps between patient service delivery and insurance reimbursements, support payroll and operational expenses during insurance processing delays, fund medical supplies and pharmaceutical inventory, and provide working capital for seasonal patient volume fluctuations.",
+      "collateral_description": "Accounts receivable from insurance providers ($25M), medical supplies inventory ($3M), cash surrender value of key person life insurance ($2M), general business assets lien, and assignment of insurance contracts.",
+      "esg_consent": "Yes - Working capital will support sustainable healthcare operations including telemedicine services to reduce patient travel, digital health records to reduce paper usage, and sustainable medical supply procurement practices.",
+      "drawdown_type": "revolving"
+    }
+  ]

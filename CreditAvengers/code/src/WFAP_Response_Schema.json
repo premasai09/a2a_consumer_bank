@@ -1,0 +1,18 @@
+{
+    "response": {
+      "message": {
+        "amount_approved": "number",
+        "bank_agent_id": "string",
+        "created_at": "string",
+        "currency": "string",
+        "esg_impact_summary": "string",
+        "intent_id": "string",
+        "interest_rate_annual": "number",
+        "offer_id": "string",
+        "protocol_version": "string",
+        "repayment_duration_months": "number",
+        "repayment_schedule": "string",
+        "status": "string"
+      }
+    }
+  }

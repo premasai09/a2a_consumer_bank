@@ -1,0 +1,43 @@
+[
+    {
+      "application_id": "MSM-001-EQ",
+      "company_name": "Midwest Steel Manufacturing Corp.",
+      "sender_email": "treasury@midweststeel.com",
+      "requested_amount_usd": 3500000,
+      "preferred_interest_rate_percent": 6.8,
+      "repayment_duration_months": 60,
+      "repayment_preference": "monthly",
+      "purpose": "Manufacturing Equipment Modernization and Automation - Replace aging steel production equipment with modern automated systems to improve efficiency, reduce labor costs, enhance product quality, and meet environmental standards. Includes new furnaces, rolling mills, cutting equipment, and quality control systems.",
+      "collateral_description": "Equipment being financed ($17M value), existing manufacturing equipment ($45M), real estate and facilities ($25M in Ohio and Indiana), inventory ($12M), and equipment warranties from manufacturers.",
+      "esg_consent": "Yes - Equipment upgrades will significantly reduce carbon emissions and improve energy efficiency. Current certifications: ISO14001, ENERGY STAR, SA8000. Carbon emissions: 285,000 tons CO2e annually, targeting 15% reduction through modernization.",
+      "drawdown_type": "partial"
+    },
+    
+    {
+      "application_id": "MSM-002-INV",
+      "company_name": "Midwest Steel Manufacturing Corp.",
+      "sender_email": "treasury@midweststeel.com",
+      "requested_amount_usd": 2500000,
+      "preferred_interest_rate_percent": 5.5,
+      "repayment_duration_months": 24,
+      "repayment_preference": "quarterly",
+      "purpose": "Raw Materials Inventory and Working Capital Management - Manage working capital needs for raw material purchases (iron ore, coal, scrap metal), support seasonal production cycles, bridge timing gaps between material purchases and customer payments, and maintain optimal inventory levels for production efficiency.",
+      "collateral_description": "Raw materials inventory ($35M), finished goods inventory ($18M), accounts receivable ($22M), warehouse facilities, and general business assets lien with floating charge on inventory.",
+      "esg_consent": "Yes - Committed to responsible sourcing of raw materials and sustainable supply chain practices. Will prioritize recycled steel content and environmentally certified suppliers where possible.",
+      "drawdown_type": "revolving"
+    },
+    
+    {
+      "application_id": "MSM-003-RE",
+      "company_name": "Midwest Steel Manufacturing Corp.",
+      "sender_email": "treasury@midweststeel.com",
+      "requested_amount_usd": 4000000,
+      "preferred_interest_rate_percent": 6.2,
+      "repayment_duration_months": 84,
+      "repayment_preference": "monthly",
+      "purpose": "Facility Expansion and Warehouse Development - Construct new 200,000 sq ft manufacturing facility in Tennessee to serve southeastern markets, expand existing Ohio warehouse capacity by 150,000 sq ft, and develop specialized storage for high-grade steel products. Includes environmental compliance upgrades.",
+      "collateral_description": "New real estate and facilities being constructed ($14M), existing Ohio facilities ($25M), Tennessee land purchase ($2.5M), corporate guarantee, and first mortgage on new Tennessee property.",
+      "esg_consent": "Yes - New facilities will be designed to LEED standards where possible and include advanced environmental controls. Construction will follow sustainable building practices and local environmental regulations.",
+      "drawdown_type": "lumpsum"
+    }
+  ]

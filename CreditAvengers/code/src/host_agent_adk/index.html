@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Consumer Bank - Credit Line Service</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-university"></i>
+                        <h1>CrediFlow</h1>
+                    </div>
+                    <p class="subtitle">Developed by CreditAvengers</p>
+                </div>
+                <div class="connection-status">
+                    <div class="status-indicator" id="connectionStatus">
+                        <i class="fas fa-circle"></i>
+                        <span>Connected Bank Agents</span>
+                    </div>
+                    <div class="bank-agents">
+                        <span class="agents-label">Bank Agents:</span>
+                        <div class="agent-badges">
+                            <div class="agent-badge" id="agent-cloudtrust" title="CloudTrust Financial">
+                                <i class="fas fa-building"></i>
+                                <span>CT</span>
+                            </div>
+                            <div class="agent-badge" id="agent-finovate" title="Finovate Bank">
+                                <i class="fas fa-building"></i>
+                                <span>FN</span>
+                            </div>
+                            <div class="agent-badge" id="agent-zentra" title="Zentra Bank">
+                                <i class="fas fa-building"></i>
+                                <span>ZB</span>
+                            </div>
+                            <div class="agent-badge" id="agent-byte" title="Byte Bank">
+                                <i class="fas fa-building"></i>
+                                <span>BB</span>
+                            </div>
+                            <div class="agent-badge" id="agent-nexvault" title="NexVault Bank">
+                                <i class="fas fa-building"></i>
+                                <span>NV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Profile Icon -->
+                <div class="profile-section">
+                    <button class="profile-icon" id="profileIcon" title="Company Profile">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h2>Welcome to CrediFlow Agent</h2>
+                        <p>One Stop Solution for all your Line of Credit Requests.This agent can help you:</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Apply for Line of Credit to multiple banks</li>
+                            <li><i class="fas fa-check"></i> Compare offers with ESG considerations</li>
+                            <li><i class="fas fa-check"></i> Negotiate terms with banks</li>
+                            <li><i class="fas fa-check"></i> Select the best offer for your needs</li>
+                        </ul>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="startCreditApplication()">
+                                <i class="fas fa-plus"></i>
+                                Start Credit Application
+                            </button>
+                            <button class="quick-action-btn" onclick="showSampleRequest()">
+                                <i class="fas fa-lightbulb"></i>
+                                View Sample Request
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="typing-text">Processing your request...</span>
+                </div>
+
+                <!-- Credit Offers Popup Button -->
+                <div class="credit-offers-button-container" id="creditOffersButtonContainer" style="display: none;">
+                    <button class="credit-offers-btn" id="creditOffersBtn" title="View Credit Offers">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View Offers</span>
+                    </button>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Describe your credit line requirements..."
+                            rows="1"
+                            maxlength="2000"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button id="attachBtn" class="action-btn" title="Attach file">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button id="sendBtn" class="send-btn" title="Send message">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-footer">
+                        <div class="character-count">
+                            <span id="charCount">0</span>/2000
+                        </div>
+                        <div class="input-hints">
+                            Press <kbd>Enter</kbd> to send, <kbd>Shift+Enter</kbd> for new line
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Start Application Button -->
+                <div class="start-app-section">
+                    <button class="start-app-btn" id="startAppBtn" onclick="startCreditApplication()" title="Start New Credit Application">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Start Application</span>
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-history"></i> Session Info</h3>
+                    <div class="session-info">
+                        <div class="info-item">
+                            <label>Session ID:</label>
+                            <span id="sessionId">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Started:</label>
+                            <span id="sessionTime">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Messages:</label>
+                            <span id="messageCount">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-chart-line"></i> Request Status</h3>
+                    <div class="status-timeline" id="statusTimeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-circle-notch"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span>Ready to start</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <div class="settings-controls">
+                        <div class="control-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="autoScrollToggle" checked>
+                                <span class="toggle-slider"></span>
+                                Auto-scroll messages
+                            </label>
+                        </div>
+                        <div class="control-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="soundToggle" checked>
+                                <span class="toggle-slider"></span>
+                                Sound notifications
+                            </label>
+                        </div>
+                        <div class="control-group">
+                            <label>Theme:</label>
+                            <select id="themeSelect">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-info-circle"></i> Help</h3>
+                    <div class="help-links">
+                        <a href="#" class="help-link" onclick="showHelp()">
+                            <i class="fas fa-question-circle"></i>
+                            How to use
+                        </a>
+                        <a href="#" class="help-link" onclick="showSampleRequests()">
+                            <i class="fas fa-file-alt"></i>
+                            Sample requests
+                        </a>
+                        <a href="#" class="help-link" onclick="showAPIInfo()">
+                            <i class="fas fa-code"></i>
+                            API Information
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner">
+                    <i class="fas fa-sync-alt fa-spin"></i>
+                </div>
+                <h3>Processing Your Request</h3>
+                <p id="loadingText">Connecting to bank agents...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Forms -->
+        <div class="modal" id="formModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Credit Application Form</h3>
+                    <button class="modal-close" onclick="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Form content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
